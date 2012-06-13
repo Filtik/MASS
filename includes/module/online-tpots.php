@@ -1,21 +1,12 @@
 <?php 
 
+mysql_select_db ($tpotsdb);
+$abplayer = "SELECT * FROM vault WHERE int_1 = 1 AND type = 23";
+$ergebnis = mysql_query($abplayer);
 
-if ($moulserver == 1)
-{
-	$abfrage = 'SELECT * FROM vault."Nodes" WHERE "NodeType" = 23 AND "Int32_1" = 1 ORDER BY "String64_1", "IString64_1"';
-}
-elseif ($moulserver == 2)
-{
-	$abfrage = "SELECT * FROM playerinfo WHERE online = 1 ORDER BY string64_1, name";
-}
-
-$ergebnis = pg_query($abfrage);
-
-$isonavatargroupnum = 0;
 $isonavatargroup = 0;
 
-if(pg_num_rows($ergebnis) > 0) 
+if(mysql_num_rows($ergebnis) > 0) 
 { 
     echo '<p align="center">';
 
@@ -27,18 +18,13 @@ mysql_select_db ($dbname);
 	{
 		$isonavatargroup = 0;
 		$i = $i;
-		$ergebnis2 = pg_query($abfrage);
-		while($row2 = pg_fetch_object($ergebnis2))
+mysql_select_db ($tpotsdb);
+		$ergebnis2 = mysql_query($abplayer);
+		while($row2 = mysql_fetch_object($ergebnis2))
 		{
-		
-		if ($moulserver == 1)
-		{$name = $row2->IString64_1;}
-		elseif ($moulserver == 2)
-		{$name = $row2->name;}
-		
 			$avafound = preg_split("/[\s]*[,][\s]*/", $rowava->avatar);
 			
-			if(in_array($name, $avafound))
+			if(in_array($row2->lstr_1, $avafound))
 			{
 				$isonavatargroup ++;
 			}
@@ -58,29 +44,15 @@ mysql_select_db ($dbname);
 			if ($querystring == "online-full")
 			{
 				echo '
-            <td width="50" align="center"><b><font size="4">KI #</font></b></td> 
-            <td width="200" align="center"><b><font size="4">Age</font></b></td>';
+				<td width="50" align="center"><b><font size="4">KI #</font></b></td> 
+				<td width="200" align="center"><b><font size="4">Age</font></b></td>';
 			}
 			echo '
         </tr>'; 
 
-while($row = pg_fetch_object($ergebnis))
+while($row = mysql_fetch_object($ergebnis))
     {
-	
-	if ($moulserver == 1)
-	{
-		$name = $row->IString64_1;
-		$ageis = $row->String64_1;
-		$ki = $row->CreatorIdx;
-	}
-	elseif ($moulserver == 2)
-	{
-		$name = $row->name;
-		$ageis = $row->string64_1;
-		$ki = $row->ki;
-	}
-	
-	switch($ageis)
+	switch($row->str_1)
         {
             case "Personal":
                 $agename = "Relto";
@@ -107,13 +79,13 @@ while($row = pg_fetch_object($ergebnis))
                 $agename = "Pellet Bahro Cave";
                 break;
             default:
-                $agename = $ageis;
+                $agename = $row->str_1;
                 break;
 		}
 		
     echo '<tr>';
 		
-		if(in_array($name, $avafound))
+		if(in_array($row->lstr_1, $avafound))
 		{
 			echo '<td width="150" align="left"><font color="'.$rowava->color.'">';
 			
@@ -122,35 +94,18 @@ while($row = pg_fetch_object($ergebnis))
 				echo '<img border="0" src="../img/toc-new.png" width="16" height="16">';
 			}
 			
-			echo ''.$name.'</font></td>';
+			echo ''.$row->lstr_1.'</font></td>';
 		}
 		else
 		{
-			echo '<td width="150" align="left">'.$name.'</td>';
+			echo '<td width="150" align="left">'.$row->lstr_1.'</td>';
 		}
 		
 		if ($querystring == "online-full")
 		{ 
-		echo '<td width="50" align="right">'.$ki.'</td>';
+			echo '<td width="50" align="right">'.$row->owner.'</td>';
 		
-		if($row->string64_1 == 'Hood')
-		{
-			$fragmem = "SELECT * FROM ageinfo A, playerinfo P WHERE P.ki = ".$ki." AND A.uuid_1 = P.uuid_1 AND A.string64_3 = 'Hood'";
-			$ergmem = pg_query($fragmem);
-			while($hood = pg_fetch_object($ergmem))
-				echo '<td width="200" align="left">'.$hood->text_1.'</td></tr>';
-		}
-		elseif($row->string64_1 == 'Bevin')
-		{
-			$fragmem = "SELECT * FROM ageinfo A, playerinfo P WHERE P.ki = ".$ki." AND A.uuid_1 = P.uuid_1 AND A.string64_3 = 'Bevin'";
-			$ergmem = pg_query($fragmem);
-			while($bevin = pg_fetch_object($ergmem))
-				echo '<td width="200" align="left">'.$bevin->string64_4.'('.$bevin->int32_1.')</td></tr>';
-		}
-		else
-		{
 			echo '<td width="200" align="left">'.$agename.'</td></tr>';
-        }
 		}
 }
     echo '</table> </div>'; 
@@ -165,8 +120,8 @@ else
 			if ($querystring == "online-full")
 			{
 				echo '
-            <td width="50" align="center"><b><font size="4">KI #</font></b></td> 
-            <td width="150" align="center"><b><font size="4">Age</font></b></td>';
+				<td width="50" align="center"><b><font size="4">KI #</font></b></td> 
+				<td width="150" align="center"><b><font size="4">Age</font></b></td>';
 				$colspan = 3;
 			} else { $colspan = 1; }
 			echo '
@@ -177,10 +132,5 @@ else
 
 '; 
 }
-$time = date("H:i:s");
-$date = date("M d, Y");
-echo
-'
-<div align="center">'.$time.'<br>'
-.$date.'</div>';
+
 ?>

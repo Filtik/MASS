@@ -4,7 +4,7 @@ $serverison = 0;
 
 if ($displayset == "moul")
 {
-	if ($moulserver == 1)
+	if (moulserver() == 1)
 	{
 	$serverisonmax = 1;
 		if (serveron(dirtsand) == 1)
@@ -12,7 +12,7 @@ if ($displayset == "moul")
 			$serverison ++;
 		}
 	}
-	elseif ($moulserver == 2)
+	elseif (moulserver() == 2)
 	{
 	$serverisonmax = 2;
 		if (serveron(moss_backend) == 1)

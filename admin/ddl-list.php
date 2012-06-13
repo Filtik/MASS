@@ -5,21 +5,12 @@
 function list_array_display($arrayfrag)
 {
 	
-if ($arrayfrag == "displaymoul")
-{
-	$array = 'moul';
-	$category = "mouldisplayinsertdisplay";
-}
-elseif ($arrayfrag == "displaytpots")
-{
-	$array = 'tpots';
-	$category = "tpotsdisplayinsertdisplay";
-}
+$category = "displayinsertdisplay";
 
 echo '<script type="text/javascript">
 function fillCategory(){';
 
-$frag = mysql_query("SELECT * FROM modul WHERE type = '".$array."'");
+$frag = mysql_query("SELECT * FROM modul");
 	
 while($row = mysql_fetch_object($frag))
 {
@@ -40,22 +31,11 @@ echo ''.$inhalt.'}</script>';
 
 function list_array_position($arrayfrag)
 {
-include ('../config/globalsetting.php');
+include ('includes/modulesset.php');
 	
-if ($arrayfrag == "displaymoul")
-{
-	$selectname = "mouldisplayinsertselect";
-	$firsttabel = "mouldisplayinsertdisplay";
-	$array = 'moul';
-	$posiname = "mouldisplayinsertposition";
-}
-elseif ($arrayfrag == "displaytpots")
-{
-	$selectname = "tpotsdisplayinsertselect";
-	$firsttabel = "tpotsdisplayinsertdisplay";
-	$array = 'tpots';
-	$posiname = "tpotsdisplayinsertposition";
-}
+$selectname = "displayinsertselect";
+$firsttabel = "displayinsertdisplay";
+$posiname = "displayinsertposition";
 
 echo '<script type="text/javascript">
 function array_position(){
@@ -63,7 +43,7 @@ removeAllOptions(document.drop_list.'.$posiname.')
 removeAllOptions(document.drop_list.'.$selectname.')
 addOption(document.drop_list.'.$selectname.', "", "Select a Position");;';
 
-$frag = mysql_query("SELECT * FROM modul WHERE type = '".$array."'");
+$frag = mysql_query("SELECT * FROM modul");
 
 while($row = mysql_fetch_object($frag))
 {
@@ -95,26 +75,16 @@ echo ''.$inhalt.'}</script>';
 
 function list_array_select($arrayfrag)
 {
-include ('../config/globalsetting.php');
+include ('includes/modulesset.php');
 	
-if ($arrayfrag == "displaymoul")
-{
-	$selectname = "mouldisplayinsertselect";
-	$array = 'moul';
-	$posiname = "mouldisplayinsertposition";
-}
-elseif ($arrayfrag == "displaytpots")
-{
-	$selectname = "tpotsdisplayinsertselect";
-	$array = 'tpots';
-	$posiname = "tpotsdisplayinsertposition";
-}
+$selectname = "displayinsertselect";
+$posiname = "displayinsertposition";
 
 echo '<script type="text/javascript">
 function array_select(){
 removeAllOptions(document.drop_list.'.$selectname.');';
 
-$frag = mysql_query("SELECT * FROM modul WHERE type = '".$array."'");
+$frag = mysql_query("SELECT * FROM modul");
 
 $row = mysql_fetch_object($frag);
 
