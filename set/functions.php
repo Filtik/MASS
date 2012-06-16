@@ -3,18 +3,18 @@
 function connectmass()
 {
 	include 'config/config.php';
-	$db = mysql_connect($massalcugshost, $massalcugsuser, $massalcugspassword);
+	$dbmysql = mysql_connect($massalcugshost, $massalcugsuser, $massalcugspassword);
 	mysql_select_db($massdb);
 }
 function connectmoul()
 {
 	include 'config/config.php';
-	$db = pg_connect('host='.$moulhost.' port='.$moulport.' dbname='.$mouldb.' user='.$mouluser.' password='.$moulpassword.'');
+	$dbpg = pg_connect('host='.$moulhost.' port='.$moulport.' dbname='.$mouldb.' user='.$mouluser.' password='.$moulpassword.'');
 }
 function connectalcugs()
 {
 	include 'config/config.php';
-	$db = mysql_connect($massalcugshost, $massalcugsuser, $massalcugspassword);
+	$dbmysql2 = mysql_connect($massalcugshost, $massalcugsuser, $massalcugspassword);
 	mysql_select_db ($alcugsdb);
 }
 

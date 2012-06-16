@@ -19,8 +19,10 @@ for ($a = 1; $a <= $zahlsort; $a++)
 	
 	$querystring = $rowsort->sel;
 	
-	if (($querystring == "online") or ($querystring == "online-full"))
+	if (($querystring == "online") or ($querystring == "online-full") or ($querystring == "msg"))
 	{ $querystringres = 'online-'.$displayset.''; }
+	elseif ($querystring == "")
+	{ $querystringres = 'clear'; }
 	else
 	{ $querystringres = ''.$rowsort->sel.''; }
 	

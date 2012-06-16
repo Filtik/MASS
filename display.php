@@ -19,4 +19,8 @@ elseif ($rowdis->type == "tpots")
 
 include ('set/sort.php');
 
+pg_close($dbpg);
+mysql_close($dbmysql);
+mysql_close($dbmysql2);
+
 ?>
