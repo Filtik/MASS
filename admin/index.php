@@ -7,7 +7,6 @@ if($_SESSION['user'] == "") {
 	die;
 }
 
-require ('../config/config.php');
 require ('includes/functions.php');
 include ('ddl-list.php');
 
@@ -30,8 +29,7 @@ Admin Security</font></u></b></p>
 
 ';
 
-$db = mysql_connect($tpotshost, $tpotsuser, $tpotspass);
-mysql_select_db ($dbname);
+connectmass();
 
 ?>
 
@@ -107,7 +105,7 @@ if ($_GET['Set'] == 'Accounts')
 			}
 		}
 		accountset($name, $pw);
-		echo '<meta http-equiv="refresh" content="0; URL=index.php?Set=Accounts">';
+		header('Location: ?Set=Accounts');
 	}
 }
 

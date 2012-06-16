@@ -1,5 +1,6 @@
 <?php
 
+connectmass();
 $fragsort = mysql_query("SELECT * FROM displays WHERE display = '".$_SERVER["QUERY_STRING"]."'");
 $zahlsort = mysql_num_rows($fragsort);
 
@@ -12,7 +13,7 @@ echo '<body bgcolor="'.$coloris->backcolor.'" text="'.$coloris->fontcolor.'">';
 
 for ($a = 1; $a <= $zahlsort; $a++)
 {	
-	mysql_select_db ($dbname);
+	mysql_select_db ($massdb);
 	$fragsort2 = mysql_query("SELECT * FROM displays WHERE display = '".$_SERVER["QUERY_STRING"]."' AND position = '".$a."'");
 	$rowsort = mysql_fetch_object($fragsort2);
 	

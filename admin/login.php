@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once('../config/config.php');
+include 'includes/functions.php';
 
 $intest = "";
 
@@ -18,8 +18,7 @@ $intest = '<p align="center"><font color="#000000">Please enter a Password</font
 }
 else
 {
-	$db = mysql_connect($tpotshost, $tpotsuser, $tpotspass);
-	mysql_select_db ($dbname);
+	connectmass();
 
 	$isuser = $_POST['username'];
 	$ispass = $_POST['password'];

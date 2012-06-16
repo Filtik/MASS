@@ -3,6 +3,13 @@
 ######################
 ######################
 
+function connectmass()
+{
+	include '../config/config.php';
+	$db = mysql_connect($massalcugshost, $massalcugsuser, $massalcugspassword);
+	mysql_select_db ($massdb);
+}
+
 function available($table, $from)
 {
 	$frag = mysql_query("SELECT * FROM ".$table." ORDER BY num DESC");
@@ -343,8 +350,13 @@ function modulvar($change)
 		$num = substr($_GET['DELETE'], -1);
 		$delete = "DELETE FROM ".$table." WHERE num = '".$num."'";
 		mysql_query($delete) or die (mysql_error());
-		$delete2 = "DELETE FROM displays WHERE display = '".$num."'";
-		mysql_query($delete2) or die (mysql_error());
+
+		$whodelete = substr($_GET['DELETE'], 0, -1);
+		if ($whodelete == 'moduldelete')
+		{
+			$delete2 = "DELETE FROM displays WHERE display = '".$num."'";
+			mysql_query($delete2) or die (mysql_error());
+		}
 	}
 	elseif ($_GET['action'] == "RENAME")
 	{

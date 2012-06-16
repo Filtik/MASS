@@ -1,39 +1,41 @@
 <?php 
 
-mysql_select_db ($tpotsdb);
+connectalcugs();
 $abplayer = "SELECT * FROM vault WHERE int_1 = 1 AND type = 23";
 $ergebnis = mysql_query($abplayer);
 
 $isonavatargroup = 0;
 
-if(mysql_num_rows($ergebnis) > 0) 
+if(mysql_num_rows($ergebnis) > 0)
 { 
     echo '<p align="center">';
 
-mysql_select_db ($dbname);
+	connectmass();
 	$avafrag = mysql_query("SELECT * FROM groups WHERE category = '".$displayset."'");
-	$rowava = mysql_fetch_object($avafrag);
-	
-	for ($i = 1; $i <= mysql_num_rows($avafrag); $i++)
+
+	if(mysql_num_rows($avafrag) > 0)
 	{
-		$isonavatargroup = 0;
-		$i = $i;
-mysql_select_db ($tpotsdb);
+	while ($rowava = mysql_fetch_object($avafrag))
+	{
+		$avafound = preg_split("/[\s]*[,][\s]*/", $rowava->avatar);
+
+		connectalcugs();
 		$ergebnis2 = mysql_query($abplayer);
 		while($row2 = mysql_fetch_object($ergebnis2))
 		{
-			$avafound = preg_split("/[\s]*[,][\s]*/", $rowava->avatar);
-			
 			if(in_array($row2->lstr_1, $avafound))
 			{
 				$isonavatargroup ++;
 			}
 		}
-		$isonavatargroupnum = $i;
 		if ($isonavatargroup > 0)
 		{
-			echo '<font color="'.$rowava->color.'">'.$rowava->name.'</font> ';
+			connectmass();
+			$groupfrag = mysql_query("SELECT * FROM groups WHERE category = '".$displayset."' AND num = '".$rowava->num."'");
+			$rowgroup = mysql_fetch_object($groupfrag);
+			echo '<font color="'.$rowgroup->color.'">'.$rowgroup->name.'</font> ';
 		}
+	}
 	}
 
 	echo '</p>
@@ -85,26 +87,50 @@ while($row = mysql_fetch_object($ergebnis))
 		
     echo '<tr>';
 		
-		if(in_array($row->lstr_1, $avafound))
+		if(mysql_num_rows($avafrag) > 0)
 		{
-			echo '<td width="150" align="left"><font color="'.$rowava->color.'">';
-			
-			if ($avatargroupimg == 1)
+			connectmass();
+			$isonavatargrouplist = 0;
+			$avafrag2 = mysql_query("SELECT * FROM groups WHERE category = '".$displayset."'");
+			while ($rowava2 = mysql_fetch_object($avafrag2))
 			{
-				echo '<img border="0" src="../img/toc-new.png" width="16" height="16">';
+			for ($i = 1; $i <= mysql_num_rows($avafrag2); $i++)
+			{
+				$avafound2 = preg_split("/[\s]*[,][\s]*/", $rowava2->avatar);
+
+				if(in_array($row->lstr_1, $avafound2))
+				{
+					$isonavatargrouplist ++;
+					$num = $rowava2->num;
+				}
 			}
+			}
+			if ($isonavatargrouplist > 0)
+			{
+				$groupfrag2 = mysql_query("SELECT * FROM groups WHERE category = '".$displayset."' AND num = '".$num."'");
+				$rowgroup2 = mysql_fetch_object($groupfrag2);
+
+				echo '<td width="150" align="left"><font color="'.$rowgroup2->color.'">';
 			
-			echo ''.$row->lstr_1.'</font></td>';
+				if ($avatargroupimg == 1)
+				{
+					echo '<img border="0" src="../img/toc-new.png" width="16" height="16">';
+				}
+				echo ''.$row->lstr_1.'</font></td>';
+			}
+			else
+			{
+				echo '<td width="150" align="left">'.$row->lstr_1.'</td>';
+			}
 		}
 		else
 		{
 			echo '<td width="150" align="left">'.$row->lstr_1.'</td>';
 		}
-		
+
 		if ($querystring == "online-full")
 		{ 
 			echo '<td width="50" align="right">'.$row->owner.'</td>';
-		
 			echo '<td width="200" align="left">'.$agename.'</td></tr>';
 		}
 }
