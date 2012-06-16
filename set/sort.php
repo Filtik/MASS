@@ -39,4 +39,7 @@ for ($a = 1; $a <= $zahlsort->position; $a++)
 
 echo '</body>';
 
+mysql_close();
+pg_close();
+
 ?>

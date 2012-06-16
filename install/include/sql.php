@@ -32,6 +32,7 @@ $tabel = array(
 5 => "CREATE TABLE `groups` (
   `num` int(11) NOT NULL AUTO_INCREMENT,
   `category` varchar(20) NOT NULL,
+  `pic` varchar(20) DEFAULT NULL,
   `name` varchar(20) NOT NULL,
   `color` varchar(20) NOT NULL,
   `avatar` text NOT NULL,
