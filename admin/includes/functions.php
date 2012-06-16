@@ -123,10 +123,73 @@ function accountset($name, $pw)
 	}
 }
 
+function serveron($pid)
+{
+	$cmd = "ps -e | grep -w ".$pid."";
+
+	exec($cmd, $output, $result);
+
+	if(count($output) >= 1){
+		return true;
+	}
+	return false;
+}
+
+function moulserver($name)
+{
+	$frag = mysql_query("SELECT * FROM config WHERE name = 'moulserver'");
+	$erg = mysql_fetch_object($frag);
+
+	if ($name == "dirtsand")
+	{
+		if ($erg->params == 1) { return "checked"; }
+		else { return ""; }
+	}
+	elseif ($name == "moss")
+	{
+		if ($erg->params == 2) { return "checked"; }
+		else { return ""; }
+	}
+}
+
+######################
+######################
+
+function DSEND($display, $position, $select)
+{
+		$fragpos = mysql_query("SELECT * FROM displays WHERE display = '".$display."' AND position = '".$position."'");
+		if(mysql_num_rows($fragpos) > 0)
+		{
+			$selrow = mysql_fetch_object($fragpos);
+
+			if ($select == "DELETE")
+			{
+				$update = "DELETE FROM displays WHERE display = '".$display."' AND position = '".$position."'";
+				mysql_query($update) or die (mysql_error());
+			}
+			else
+			{
+				if ($selrow->select != $select)
+				{
+					$update = "UPDATE displays SET sel = '".$select."' WHERE display = '".$display."' AND position = '".$position."'";
+					mysql_query($update) or die (mysql_error());
+				}
+			}
+		}
+		else
+		{
+			if(($select != "DELETE") or ($select != ""))
+			{
+				mysql_query("INSERT INTO displays values (".available('displays', 'num').", '$display', '$position', '$select')") or die (mysql_error());
+			}
+		}
+}
+
 function group_list($game)
 {
 	echo '	<tr>
 				<td width="25%">Group No.</td>
+				<td width="25%">Group Pic:</td>
 				<td width="25%">Group Name:</td>
 				<td width="25%">Group Color:</td>
 				<td width="25%">Group Avatars:</td>
@@ -135,9 +198,11 @@ function group_list($game)
 
 	while($rows = mysql_fetch_object($frag))
 	{
+		$picpath = '../img/group/';
 		$groupdelete = "groupdelete".$rows->num."";
 		$groupnum = "groupnum".$rows->num."";
 		$groupname = "groupname".$rows->num."";
+		$grouppic = "grouppic".$rows->num."";
 		$groupcolor = "groupcolor".$rows->num."";
 		$groupavatar = "groupavatar".$rows->num."";
 
@@ -155,8 +220,21 @@ function group_list($game)
 				</td>
 				<td>
 				<table border="0" width="100%">
+					<tr>
+						<td align="center">'; if ($rows->pic != ""){ echo'<p><img border="0" src="'.$picpath.''.$rows->pic.'" width="20" height="20"></p>'; } echo'</td>
+					</tr>
+					<tr><form method="POST" action="'.$_SERVER['PATH_INFO'].'?'.$_SERVER["QUERY_STRING"].'&action=PIC&PIC='.$grouppic.'&SAVE">
+						<td align="center"><input type="text" name="'.$grouppic.'" size="10" value="'.$rows->pic.'"></td>
+						</tr>
+					<tr>
+						<td align="center"><input type="submit" value="Change Pic" name="B2"></td>
+					</form></tr>
+				</table>
+				</td>
+				<td>
+				<table border="0" width="100%">
 					<tr><form method="POST" action="'.$_SERVER['PATH_INFO'].'?'.$_SERVER["QUERY_STRING"].'&action=RENAME&RENAME='.$groupname.'&SAVE">
-						<td align="center"><input type="text" name="'.$groupname.'" size="20" value="'.$rows->name.'"></td>
+						<td align="center"><input type="text" name="'.$groupname.'" size="10" value="'.$rows->name.'"></td>
 						</tr>
 					<tr>
 						<td align="center"><input type="submit" value="Change Name" name="B2"></td>
@@ -189,67 +267,6 @@ function group_list($game)
 		</tr>
 	';
 	}
-}
-######################
-######################
-
-function serveron($pid)
-{
-	$cmd = "ps -e | grep -w ".$pid."";
-
-	exec($cmd, $output, $result);
-
-	if(count($output) >= 1){
-		return true;
-	}
-	return false;
-}
-
-function moulserver($name)
-{
-	$frag = mysql_query("SELECT * FROM config WHERE name = 'moulserver'");
-	$erg = mysql_fetch_object($frag);
-
-	if ($name == "dirtsand")
-	{
-		if ($erg->params == 1) { return "checked"; }
-		else { return ""; }
-	}
-	elseif ($name == "moss")
-	{
-		if ($erg->params == 2) { return "checked"; }
-		else { return ""; }
-	}
-}
-
-function DSEND($display, $position, $select)
-{	
-		$fragpos = mysql_query("SELECT * FROM displays WHERE display = '".$display."' AND position = '".$position."'");
-		if(mysql_num_rows($fragpos) > 0)
-		{
-			$selrow = mysql_fetch_object($fragpos);
-			
-			if ($select == "DELETE")
-			{
-				$update = "DELETE FROM displays WHERE display = '".$display."' AND position = '".$position."'";
-				mysql_query($update) or die (mysql_error());
-			}
-			else
-			{
-				if ($selrow->select != $select)
-				{
-					$update = "UPDATE displays SET sel = '".$select."' WHERE display = '".$display."' AND position = '".$position."'";
-					mysql_query($update) or die (mysql_error());
-				}
-			}
-		}
-		else
-		{			
-			if(($select != "DELETE") or ($select != ""))
-			{
-				mysql_query("INSERT INTO displays values (".available('displays', 'num').", '$display', '$position', '$select')") or die (mysql_error());
-			}
-		}
 }
 
 function addmodul($game)
@@ -347,11 +364,11 @@ function modulvar($change)
 	
 	if ($_GET['action'] == "DELETE")
 	{
-		$num = substr($_GET['DELETE'], -1);
+		$num = substr($_GET['DELETE'], 11);
 		$delete = "DELETE FROM ".$table." WHERE num = '".$num."'";
 		mysql_query($delete) or die (mysql_error());
 
-		$whodelete = substr($_GET['DELETE'], 0, -1);
+		$whodelete = substr($_GET['DELETE'], 11);
 		if ($whodelete == 'moduldelete')
 		{
 			$delete2 = "DELETE FROM displays WHERE display = '".$num."'";
@@ -362,8 +379,17 @@ function modulvar($change)
 	{
 		if ($_GET['RENAME'] != "")
 		{
-			$num = substr($_GET['RENAME'], -1);
+			$num = substr($_GET['RENAME'], 9);
 			$update = "UPDATE ".$table." SET name = '".$change."' WHERE num = '".$num."'";
+			mysql_query($update) or die (mysql_error());
+		}
+	}
+	elseif ($_GET['action'] == "PIC")
+	{
+		if ($_GET['PIC'] != "")
+		{
+			$num = substr($_GET['PIC'], 8);
+			$update = "UPDATE ".$table." SET pic = '".$change."' WHERE num = '".$num."'";
 			mysql_query($update) or die (mysql_error());
 		}
 	}
@@ -371,7 +397,7 @@ function modulvar($change)
 	{
 		if ($_GET['COLOR'] != "")
 		{
-			$num = substr($_GET['COLOR'], -1);
+			$num = substr($_GET['COLOR'], 10);
 			$update = "UPDATE ".$table." SET color = '".$change."' WHERE num = '".$num."'";
 			mysql_query($update) or die (mysql_error());
 		}
@@ -380,7 +406,7 @@ function modulvar($change)
 	{
 		if ($_GET['BCOLOR'] != "")
 		{
-			$num = substr($_GET['BCOLOR'], -1);
+			$num = substr($_GET['BCOLOR'], 14);
 			$update = "UPDATE ".$table." SET backcolor = '".$change."' WHERE num = '".$num."'";
 			mysql_query($update) or die (mysql_error());
 		}
@@ -389,7 +415,7 @@ function modulvar($change)
 	{
 		if ($_GET['FCOLOR'] != "")
 		{
-			$num = substr($_GET['FCOLOR'], -1);
+			$num = substr($_GET['FCOLOR'], 14);
 			$update = "UPDATE ".$table." SET fontcolor = '".$change."' WHERE num = '".$num."'";
 			mysql_query($update) or die (mysql_error());
 		}
@@ -398,7 +424,7 @@ function modulvar($change)
 	{
 		if ($_GET['AVATAR'] != "")
 		{
-			$num = substr($_GET['AVATAR'], -1);
+			$num = substr($_GET['AVATAR'], 11);
 			$update = "UPDATE ".$table." SET avatar = '".$change."' WHERE num = '".$num."'";
 			mysql_query($update) or die (mysql_error());
 		}

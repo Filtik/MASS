@@ -310,8 +310,15 @@ if ($_GET['Set'] == 'Group')
 		{
 			if ($_GET['RENAME'] != "")
 			{
-				$num = substr($_GET['RENAME'], -1);
 				$post = $_GET['RENAME'];
+				$name = $_POST[''.$post.''];
+			}
+		}
+		elseif ($_GET['action'] == "PIC")
+		{
+			if ($_GET['PIC'] != "")
+			{
+				$post = $_GET['PIC'];
 				$name = $_POST[''.$post.''];
 			}
 		}
@@ -319,7 +326,6 @@ if ($_GET['Set'] == 'Group')
 		{
 			if ($_GET['COLOR'] != "")
 			{
-				$num = substr($_GET['COLOR'], -1);
 				$post = $_GET['COLOR'];
 				$name = $_POST[''.$post.''];
 			}
@@ -328,7 +334,6 @@ if ($_GET['Set'] == 'Group')
 		{
 			if ($_GET['AVATAR'] != "")
 			{
-				$num = substr($_GET['AVATAR'], -1);
 				$post = $_GET['AVATAR'];
 				$name = $_POST[''.$post.''];
 			}
