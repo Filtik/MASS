@@ -6,11 +6,11 @@ $ergebnis = mysql_query($abplayer);
 
 $isonavatargroup = 0;
 
+connectmass();
 if(mysql_num_rows($ergebnis) > 0)
 { 
     echo '<p align="center">';
 
-	connectmass();
 	$avafrag = mysql_query("SELECT * FROM groups WHERE category = '".$displayset."'");
 
 	if(mysql_num_rows($avafrag) > 0)
@@ -47,7 +47,7 @@ if(mysql_num_rows($ergebnis) > 0)
 			{
 				echo '
 				<td width="50" align="center"><b><font size="4">KI #</font></b></td> 
-				<td width="200" align="center"><b><font size="4">Age</font></b></td>';
+				<td width="150" align="center"><b><font size="4">Age</font></b></td>';
 			}
 			echo '
         </tr>'; 
@@ -131,7 +131,7 @@ while($row = mysql_fetch_object($ergebnis))
 		if ($querystring == "online-full")
 		{ 
 			echo '<td width="50" align="right">'.$row->owner.'</td>';
-			echo '<td width="200" align="left">'.$agename.'</td></tr>';
+			echo '<td width="150" align="left">'.$agename.'</td></tr>';
 		}
 }
     echo '</table> </div>'; 

@@ -9,7 +9,8 @@ $displayinsertnames = array (	"DELETE" => "---DELETE---",
 								"online-full" => "Members Online - Full",
 								"serveron" => "Server Online Indicator",
 								"statistics" => "Server Statistics",
-								"time" => "Date & Time",
+								"time" => "Server Date & Time",
+								"dnitime" => "DNI/KI Date & Time",
 								"msg" => "Public Messages");
 
 ?>

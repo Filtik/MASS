@@ -1,20 +1,28 @@
 <?php
 
 connectmass();
-$fragsort = mysql_query("SELECT * FROM displays WHERE display = '".$_SERVER["QUERY_STRING"]."'");
-$zahlsort = mysql_num_rows($fragsort);
+$iam = $_SERVER["QUERY_STRING"];
+if (is_numeric($iam) == TRUE)
+{
+	$tosort = mysql_fetch_object(mysql_query("SELECT * FROM modul WHERE num = '".$_SERVER["QUERY_STRING"]."'"));
+	$zahlsort = mysql_fetch_object(mysql_query("SELECT * FROM displays WHERE display = '".$_SERVER["QUERY_STRING"]."' ORDER BY position DESC"));
+	$coloris = mysql_fetch_object(mysql_query("SELECT * FROM modul WHERE num = '".$_SERVER["QUERY_STRING"]."'"));
+}
+else
+{
+	$tosort = mysql_fetch_object(mysql_query("SELECT * FROM modul WHERE name = '".$_SERVER["QUERY_STRING"]."'"));
+	$zahlsort = mysql_fetch_object(mysql_query("SELECT * FROM displays WHERE display = '".$tosort->num."' ORDER BY position DESC"));
+	$coloris = mysql_fetch_object(mysql_query("SELECT * FROM modul WHERE name = '".$_SERVER["QUERY_STRING"]."'"));
+}
 
 $modulpath = 'includes/module/';
 
-$fragback = mysql_query("SELECT * FROM modul WHERE num = '".$_SERVER["QUERY_STRING"]."'");
-$coloris = mysql_fetch_object($fragback);
-
 echo '<body bgcolor="'.$coloris->backcolor.'" text="'.$coloris->fontcolor.'">';
 
-for ($a = 1; $a <= $zahlsort; $a++)
-{	
-	mysql_select_db ($massdb);
-	$fragsort2 = mysql_query("SELECT * FROM displays WHERE display = '".$_SERVER["QUERY_STRING"]."' AND position = '".$a."'");
+for ($a = 1; $a <= $zahlsort->position; $a++)
+{
+	connectmass();
+	$fragsort2 = mysql_query("SELECT * FROM displays WHERE display = '".$tosort->num."' AND position = '".$a."'");
 	$rowsort = mysql_fetch_object($fragsort2);
 	
 	$querystring = $rowsort->sel;

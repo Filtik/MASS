@@ -3,8 +3,17 @@
 include ('set/functions.php');
 
 connectmass();
-$fragdisplay = mysql_query("SELECT * FROM modul WHERE num = '".$_SERVER["QUERY_STRING"]."'");
-$rowdis = mysql_fetch_object($fragdisplay);
+$iam = $_SERVER["QUERY_STRING"];
+if (is_numeric($iam) == TRUE)
+{
+	$fragdisplay = mysql_query("SELECT * FROM modul WHERE num = '".$_SERVER["QUERY_STRING"]."'");
+	$rowdis = mysql_fetch_object($fragdisplay);
+}
+else
+{
+	$fragdisplay = mysql_query("SELECT * FROM modul WHERE name = '".$_SERVER["QUERY_STRING"]."'");
+	$rowdis = mysql_fetch_object($fragdisplay) or die (mysql_error());
+}
 
 if ($rowdis->type == "moul")
 {
