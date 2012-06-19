@@ -121,15 +121,30 @@ if ($_GET['Set'] == 'General')
 	<table border="1" width="90%">
 		<tr>
 			<td align="center" width="50%">
-					MOUL-Server:
+					<u><b>MOUL-Server:</b></u>
 				<p><input type="radio" name="moulserver" value="1" '.moulserver(dirtsand).'>dirtsand
 				<input type="radio" name="moulserver" value="2" '.moulserver(moss).'>moss</p>
 			</td>
-			<td align="center" width="50%">Side-reload time (sec):
+			<td align="center" width="50%"><u><b>Side-reload time (sec): </b></u>
 				<p><input type="text" name="reload" value="'.settingsquery(reload).'" size="3"></p></td>
 		</tr>
 		<tr>
-			<td align="center" width="50%">&nbsp;</td>
+			<td align="center" width="50%">
+			<table border="1" width="100%">
+				<tr>
+					<td colspan="3">
+					<p align="center"><u><b>Public Message</b></u></td>
+				</tr>
+				<tr>
+					<td width="33%" align="center">Headertext for Public<br>
+					<input type="text" name="msgtitel" value="'.settingsquery(msgtitel).'" size="10"></td>
+					<td width="33%" align="center">Max. messages<br>
+					<input type="text" name="msgmax" value="'.settingsquery(msgmax).'" size="3"></td>
+					<td width="33%" align="center">Max. old Message<br>
+					<input type="text" name="msgold" value="'.settingsquery(msgold).'" size="10"></td>
+				</tr>
+			</table>
+			</td>
 			<td align="center" width="50%">&nbsp;</td>
 		</tr>
 	</table>
@@ -243,13 +258,13 @@ if ($_GET['Set'] == 'Display')
 			</tr>
 			<tr>
 				<td width="25%">
-					<select size="10" name="displayinsertdisplay" id="displayinsertdisplay" onChange="array_position();">'.list_array_display("displaytpots").'</select>
+					<select size="10" name="displayinsertdisplay" id="displayinsertdisplay" onChange="array_position();">'.list_array_display().'</select>
 				</td>
 				<td width="25%">
-					<select size="10" name="displayinsertposition" onChange="array_select();">'.list_array_position("displaytpots").'<option value="">Select a Display</option></select>
+					<select size="10" name="displayinsertposition" onChange="array_select();">'.list_array_position().'<option value="">Select a Display</option></select>
 				</td>
 				<td>
-					<select size="10" name="displayinsertselect">'.list_array_select("displaytpots").'<option value="">Select a Display</option></select>
+					<select size="10" name="displayinsertselect">'.list_array_select().'<option value="">Select a Display</option></select>
 				</td>
 			</tr>
 		</table>

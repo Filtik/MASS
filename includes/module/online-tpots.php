@@ -112,9 +112,10 @@ while($row = mysql_fetch_object($ergebnis))
 
 				echo '<td width="150" align="left"><font color="'.$rowgroup2->color.'">';
 			
-				if ($avatargroupimg == 1)
+				if ($rowgroup2->pic != "")
 				{
-					echo '<img border="0" src="../img/toc-new.png" width="16" height="16">';
+					$picpath = 'img/group/';
+					echo '<img border="0" src="'.$picpath.''.$rowgroup2->pic.'" width="20" height="20" align="top">';
 				}
 				echo ''.$row->lstr_1.'</font></td>';
 			}

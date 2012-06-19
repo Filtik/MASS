@@ -45,15 +45,22 @@ function settingsquery($name)
 }
 function generalset()
 {
-	$frag = mysql_query("SELECT * FROM config");
-
-	while($row = mysql_fetch_object($frag))
+	for ($x=1; $x < count($_POST); $x++)
 	{
-		$setname = $row->name;
-		$setparams = $_POST[''.$setname.''];
-		
-		$update = "UPDATE config SET params = '".$setparams."' WHERE name = '".$setname."'";
-		mysql_query($update) or die (mysql_error());
+		list($key, $val) = each($_POST);
+
+		$frag = mysql_query("SELECT * FROM config WHERE name = '".$key."'");
+
+		if (mysql_num_rows($frag) == 0)
+		{
+			$insert = "INSERT INTO config values (".available('config', 'num').", '".$key."', '".$val."')";
+			mysql_query($insert);
+		}
+		else
+		{
+			$update = "UPDATE config SET params = '".$val."' WHERE name = '".$key."'";
+			mysql_query($update);
+		}
 	}
 }
 

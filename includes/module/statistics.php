@@ -2,7 +2,7 @@
 
 if ($displayset == "moul")
 {
-if (moulserver() == 1)
+if (configis('moulserver') == 1)
 {
 	$players = pg_query('SELECT * FROM vault."Nodes" WHERE "NodeType" = 23');
 	$mtime = 'ModifyTime';
@@ -10,7 +10,7 @@ if (moulserver() == 1)
 	$erghood = pg_query('SELECT * FROM vault."Nodes" WHERE "String64_2" = \'Neighborhood\' ORDER BY "CreateTime" DESC');
 	$name = 'PlayerName';
 }
-elseif (moulserver() == 2)
+elseif (configis('moulserver') == 2)
 {
 	$players = pg_query("SELECT modifytime FROM playerinfo");
 	$mtime = 'modifytime';
@@ -68,11 +68,11 @@ while($playersdate = $playersdateis($players))
 
 if ($displayset == "moul")
 {
-	if (moulserver() == 1)
+	if (configis('moulserver') == 1)
 	{
 		$playersonlydate = date("Y-m-d", $playersdate->$mtime);
 	}
-	elseif (moulserver() == 2)
+	elseif (configis('moulserver') == 2)
 	{
 		$playersonlydate = substr($playersdate->$mtime, 0, 10);
 	}
@@ -150,7 +150,7 @@ echo '
 ';
 
 $hood = pg_fetch_object($erghood);
-if (moulserver() == 1)
+if (configis('moulserver') == 1)
 {
 	if($hood->Int32_1 == 0)
 	{
@@ -161,7 +161,7 @@ if (moulserver() == 1)
 		echo '<b>'.$hood->String64_4.'('.$hood->Int32_1.')</b>';
 	}
 }
-elseif (moulserver() == 2)
+elseif (configis('moulserver') == 2)
 {
 	if($hood->int32_1 == 0)
 	{

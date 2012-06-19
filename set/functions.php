@@ -30,9 +30,10 @@ function serveron($pid)
 	return false;
 }
 
-function moulserver()
+function configis($name)
 {
-	$frag = mysql_query("SELECT * FROM config WHERE name = 'moulserver'");
+	connectmass();
+	$frag = mysql_query("SELECT * FROM config WHERE name = '".$name."'");
 	$erg = mysql_fetch_object($frag);
 	
 	return $erg->params;

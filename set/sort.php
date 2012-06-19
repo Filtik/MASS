@@ -27,8 +27,10 @@ for ($a = 1; $a <= $zahlsort->position; $a++)
 	
 	$querystring = $rowsort->sel;
 	
-	if (($querystring == "online") or ($querystring == "online-full") or ($querystring == "msg"))
+	if (($querystring == "online") or ($querystring == "online-full"))
 	{ $querystringres = 'online-'.$displayset.''; }
+	elseif ($querystring == "msg")
+	{ $querystringres = 'msg-'.$displayset.''; }
 	elseif ($querystring == "")
 	{ $querystringres = 'clear'; }
 	else
@@ -40,6 +42,9 @@ for ($a = 1; $a <= $zahlsort->position; $a++)
 echo '</body>';
 
 mysql_close();
-pg_close();
+if ($displayset == "moul")
+{
+	pg_close();
+}
 
 ?>

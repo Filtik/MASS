@@ -2,7 +2,7 @@
 
 <?php
 
-function list_array_display($arrayfrag)
+function list_array_display()
 {
 	
 $category = "displayinsertdisplay";
@@ -29,7 +29,7 @@ echo ''.$inhalt.'}</script>';
 
 ###############
 
-function list_array_position($arrayfrag)
+function list_array_position()
 {
 include ('includes/modulesset.php');
 	
@@ -73,7 +73,7 @@ echo ''.$inhalt.'}</script>';
 
 ##############
 
-function list_array_select($arrayfrag)
+function list_array_select()
 {
 include ('includes/modulesset.php');
 	
@@ -88,7 +88,7 @@ $frag = mysql_query("SELECT * FROM modul");
 
 $row = mysql_fetch_object($frag);
 
-$posimax = mysql_num_rows(mysql_query("SELECT * FROM displays WHERE display = '".$row->num."'"));
+$posimax = mysql_num_rows(mysql_query("SELECT * FROM displays ORDER BY position DESC"));
 $posimax ++;
 
 for($x=1; $x <= $posimax; $x++)

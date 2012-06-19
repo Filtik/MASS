@@ -1,10 +1,10 @@
 <?php 
 
-if (moulserver() == 1)
+if (configis('moulserver') == 1)
 {
 	$abfrage = 'SELECT * FROM vault."Nodes" WHERE "NodeType" = 23 AND "Int32_1" = 1 ORDER BY "String64_1", "IString64_1"';
 }
-elseif (moulserver() == 2)
+elseif (configis('moulserver') == 2)
 {
 	$abfrage = "SELECT * FROM playerinfo WHERE online = 1 ORDER BY string64_1, name";
 }
@@ -29,9 +29,9 @@ if(pg_num_rows($ergebnis) > 0)
 		$ergebnis2 = pg_query($abfrage);
 		while($row2 = pg_fetch_object($ergebnis2))
 		{
-			if (moulserver() == 1)
+			if (configis('moulserver') == 1)
 			{$name = $row2->IString64_1;}
-			elseif (moulserver() == 2)
+			elseif (configis('moulserver') == 2)
 			{$name = $row2->name;}
 		
 			if(in_array($name, $avafound))
@@ -64,13 +64,13 @@ if(pg_num_rows($ergebnis) > 0)
 while($row = pg_fetch_object($ergebnis))
     {
 	
-	if (moulserver() == 1)
+	if (configis('moulserver') == 1)
 	{
 		$name = $row->IString64_1;
 		$ageis = $row->String64_1;
 		$ki = $row->CreatorIdx;
 	}
-	elseif (moulserver() == 2)
+	elseif (configis('moulserver') == 2)
 	{
 		$name = $row->name;
 		$ageis = $row->string64_1;
