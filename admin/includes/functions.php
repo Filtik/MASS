@@ -367,8 +367,8 @@ function modulvar($change)
 	elseif ($_GET['Set'] == "Group")
 	{
 		$table = "groups";
-		$insertmoul = "INSERT INTO ".$table." values (".available(''.$table.'', 'num').", 'moul', 'newmoul".$table."', 'black', 'example, system, Avatar')";
-		$inserttpots = "INSERT INTO ".$table." values (".available(''.$table.'', 'num').", 'tpots', 'newtpots".$table."', 'black', 'example, system, Avatar')";
+		$insertmoul = "INSERT INTO ".$table." values (".available(''.$table.'', 'num').", 'moul', '', 'newmoul".$table."', 'black', 'example, system, Avatar')";
+		$inserttpots = "INSERT INTO ".$table." values (".available(''.$table.'', 'num').", 'tpots', '', 'newtpots".$table."', 'black', 'example, system, Avatar')";
 	}
 	
 	if ($_GET['action'] == "DELETE")
