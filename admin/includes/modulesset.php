@@ -12,6 +12,7 @@ $displayinsertnames = array (	"DELETE" => "---DELETE---",
 								"online-full" => "Members Online - Full",
 								"statistics" => "Server Statistics",
 								"msg" => "Public Messages",
-								"msg-all" => "Public Messages - All Servers");
+								"msg-all" => "Public Messages - All Servers",
+								"event" => "Event list");
 
 ?>

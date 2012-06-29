@@ -4,25 +4,10 @@ $serverison = 0;
 
 if ($displayset == "moul")
 {
-	if (configis('moulserver') == 1)
+$serverisonmax = 1;
+	if (serveronmoul($_SERVER['SERVER_NAME']) == 1)
 	{
-	$serverisonmax = 1;
-		if (serveron(dirtsand) == 1)
-		{
-			$serverison ++;
-		}
-	}
-	elseif (configis('moulserver') == 2)
-	{
-	$serverisonmax = 2;
-		if (serveron(moss_backend) == 1)
-		{
-			$serverison ++;
-		}
-		if (serveron(moss) == 1)
-		{
-			$serverison ++;
-		}
+		$serverison ++;
 	}
 }
 elseif ($displayset == "tpots")

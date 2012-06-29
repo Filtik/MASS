@@ -18,6 +18,19 @@ function connectalcugs()
 	mysql_select_db ($alcugsdb);
 }
 
+function serveronmoul($ip)
+{
+	if (! $sock = @fsockopen($ip, 14617, $num, $error, 1))
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+		fclose($sock);
+	}
+}
+
 function serveron($pid)
 {
 	$cmd = "ps -e | grep -w ".$pid."";

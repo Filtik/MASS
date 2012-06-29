@@ -12,7 +12,7 @@ if (is_numeric($iam) == TRUE)
 else
 {
 	$fragdisplay = mysql_query("SELECT * FROM modul WHERE name = '".$_SERVER["QUERY_STRING"]."'");
-	$rowdis = mysql_fetch_object($fragdisplay) or die (mysql_error());
+	$rowdis = mysql_fetch_object($fragdisplay);
 }
 
 if ($rowdis->type == "moul")

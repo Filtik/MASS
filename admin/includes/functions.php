@@ -213,8 +213,6 @@ function group_list($game)
 		$groupcolor = "groupcolor".$rows->num."";
 		$groupavatar = "groupavatar".$rows->num."";
 
-		$colback = mysql_fetch_object(mysql_query("SELECT * FROM modul WHERE type = '".$game."' AND num = '".$rows->num."'"));
-
 		echo '
 		<tr>
 			<td>
@@ -253,7 +251,7 @@ function group_list($game)
 				<td>
 				<table border="0" width="100%">
 					<tr><form method="POST" action="'.$_SERVER['PATH_INFO'].'?'.$_SERVER["QUERY_STRING"].'&action=COLOR&COLOR='.$groupcolor.'&SAVE">
-						<td align="center"><p><font color="'.$rows->color.'"><span style="background-color: '.$colback->backcolor.'">TEST</span></font></p></td>
+						<td align="center"><p><font color="'.$rows->color.'">TEST</font></p></td>
 					</tr>
 					<tr>
 						<td align="center" bgcolor="'.$rows->color.'"><input type="text" name="'.$groupcolor.'" size="5" value="'.$rows->color.'"></td>
