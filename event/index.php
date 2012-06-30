@@ -44,16 +44,17 @@ if(isset($_POST['submit']))
 	{
 		$inserttpots = "INSERT INTO ".$table." values ('', '".$isuserrow->id."', '".$eventavatar."', '".$eventcolor."', now())";
 		mysql_query($inserttpots) or die (mysql_error());
+		echo '<p align="center">Your entry was added.</p>';
 	}
 	else
 	{
 		$updatetpots = "UPDATE ".$table." SET name = '".$eventavatar."', color = '".$eventcolor."' WHERE moulid = '".$isuserrow->id."'";
 		mysql_query($updatetpots) or die (mysql_error());
+		echo '<p align="center">Your entry was updated.</p>';
 	}
 	
 	
 	echo '<meta http-equiv="refresh" content="5; URL=http://mass.the-open-cave.net/display.php?wall-event-moul">';
-	echo '<p align="center">Your Player is inserted</p>';
 	session_destroy();
 }
 else
@@ -64,7 +65,7 @@ echo '
 		<u><b><font size="7">TOC-Event<br>
 		</font><i><font size="7">Registration form</font></i></b></u><hr>
 
-		<p>Please Select a Avatar for Playing</p>
+		<p>Please select an avatar for playing</p>
 		<p>&nbsp;</p>
 		</div>
 <form method="POST" action="'.$PHP_SELF.'">

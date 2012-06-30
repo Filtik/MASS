@@ -9,6 +9,8 @@ function connectmoul()
 
 connectmoul();
 
+$passhash = '../set/compute_auth_hash';
+
 $intest = "";
 
 if(isset($_POST['submit']))
@@ -41,22 +43,22 @@ else
 	
 	if($hash != $result['hash'])
 	{
-		$intest = '<p align="center"><font color="#000000">Sorry, your password is wrong!</font></p>';
+		$intest = '<p align="center">Sorry, your password is wrong!</p>';
 	}
 	elseif ($result['banned'] == "t")
 	{
-		$intest = '<p align="center"><font color="#000000">Sorry, your Account is not Activatet or BANNED!<br /><br>Please notify a ADMIN or a MOD in the Forum</font></p>';
+		$intest = '<p align="center">Sorry, your Account is not Activatet or BANNED!<br /><br>Please notify a ADMIN or a MOD in the Forum</p>';
 	}
 	elseif ($avafrag == 0)
 	{
-		$intest = '<p align="center"><font color="#000000">Her Account, has no Avatars.<br /><br /><br /><b><font color="#FF0000" face="Felix Titling">ACCESS DENIED</font></p>';
+		$intest = '<p align="center">Her Account, has no Avatars.<br /><br /><br /><b><font face="Felix Titling">ACCESS DENIED</font></p>';
 	}
 	else
 	{
 		$user = $result['name'];
 		$_SESSION['eventuser'] = $user;
 		echo '<meta http-equiv="refresh" content="1; URL=index.php">';
-		$intest = '<p align="center"><font color="#000000">LogIn successfully! :-)</p>';
+		$intest = '<p align="center">LogIn successfully! :-)</p>';
 	}
 }
 }
@@ -89,7 +91,7 @@ echo'
 		</table>
 		</div>
 	</form>
-	</body>
+	<br><br><p align="center">'.$intest.'</p>
 ';
 
 ?>
