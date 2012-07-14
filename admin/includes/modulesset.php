@@ -13,6 +13,7 @@ $displayinsertnames = array (	"DELETE" => "---DELETE---",
 								"statistics" => "Server Statistics",
 								"msg" => "Public Messages",
 								"msg-all" => "Public Messages - All Servers",
-								"event" => "Event list");
+								"event" => "Event list",
+								"event-ko" => "Event K.O. list");
 
 ?>
